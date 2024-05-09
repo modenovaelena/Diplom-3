@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.qameta.allure.Step;
 import services.*;
 
-public class RegistrationPage {
+public class RegistrationPage implements Page {
     
     private  WebDriver driver;
     

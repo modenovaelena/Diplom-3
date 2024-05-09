@@ -18,7 +18,10 @@ import static io.restassured.RestAssured.given;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-public class LoginTest {
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
+
+public class EnterLKTest {
 
     public static final boolean USE_YANDEX = false;
     private  WebDriver driver;
@@ -44,26 +47,8 @@ public class LoginTest {
     }
     
     @Test
-    @DisplayName("Test login via 'Enter Account' button on home page")
-    public void loginViaEnterAccountButtonTest () {
-        
-        HomePage hPage = new HomePage(driver);
-        hPage.open();
-        
-        Assert.assertTrue(hPage.isOpened());
-        
-        LoginPage logPage = hPage.pressEnterAccountButton();
-        
-        Assert.assertTrue(logPage.isOpened());
- 
-        hPage = logPage.fillLoginFormAndContinue(this.user.getEmail(), this.user.getPassword());
-
-        Assert.assertTrue(hPage.isOpened());
-    }
-    
-    @Test
-    @DisplayName("Test login via 'Personal Space' link on home page")
-    public void loginViaLkLinkTest () {
+    @DisplayName("Test enter LK")
+    public void enterLKViaELKLinkTest () {
         
         HomePage hPage = new HomePage(driver);
         hPage.open();
@@ -77,44 +62,15 @@ public class LoginTest {
         hPage = logPage.fillLoginFormAndContinue(this.user.getEmail(), this.user.getPassword());
 
         Assert.assertTrue(hPage.isOpened());
+        
+        Page lkPage = hPage.clickLKLink();
+        Assert.assertTrue(lkPage.isOpened());
+        
+        assertThat(lkPage, instanceOf(LKPage.class));
+      
     }
     
-    
-    @Test
-    @DisplayName("Test login via registration page")
-    public void loginViaRegistrationPageTest () {
-        
-        RegistrationPage regPage = new RegistrationPage(driver);
-        regPage.open();
-        
-        Assert.assertTrue(regPage.isOpened());
-        
-        LoginPage logPage = regPage.clickLoginLink();
-        
-        Assert.assertTrue(logPage.isOpened());
- 
-        HomePage hPage = logPage.fillLoginFormAndContinue(this.user.getEmail(), this.user.getPassword());
-
-        Assert.assertTrue(hPage.isOpened());
-    }
-    
-    @Test
-    @DisplayName("Test login via password recovery")
-    public void loginViaPasswordRecoveryTest () {
-        
-        PasswordRecoveryPage prPag = new PasswordRecoveryPage(driver);
-        prPag.open();
-        
-        Assert.assertTrue(prPag.isOpened());
-        
-        LoginPage logPage = prPag.clickLoginLink();
-        
-        Assert.assertTrue(logPage.isOpened());
- 
-        HomePage hPage = logPage.fillLoginFormAndContinue(this.user.getEmail(), this.user.getPassword());
-
-        Assert.assertTrue(hPage.isOpened());
-    }
+   
     
     @After
     public void teardown() {

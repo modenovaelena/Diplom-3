@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.qameta.allure.Step;
 import services.*;
 
-public class LoginPage {
+public class LoginPage implements Page {
     
     private  WebDriver driver;
     
@@ -50,7 +50,9 @@ public class LoginPage {
         
         driver.findElement(LOGIN_BUTTON).click();
         
-        return new HomePage(driver);
+        HomePage result = new HomePage(driver);
+        result.setAuth(true);
+        return result;
     }
     
     @Step("Click 'LK' link")

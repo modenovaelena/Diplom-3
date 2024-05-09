@@ -19,7 +19,7 @@ public class RegistrationPage {
     private static final By EMAIL_FIELD = By.xpath (".//label[text()='Email']/../input");
     private static final By NAME_FIELD = By.xpath (".//label[text()='Имя']/../input");
     private static final By REGISTER_BUTTON = By.xpath (".//button[text() = 'Зарегистрироваться']");
-
+    private static final By PSWD_ERROR_MESSAGE = By.xpath (".//p[text() = 'Некорректный пароль']");
    
     public RegistrationPage (WebDriver driver) {
         this.driver = driver;
@@ -33,6 +33,12 @@ public class RegistrationPage {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOfElementLocated(REGISTER_BUTTON));
         return driver.findElement(REGISTER_BUTTON).isDisplayed();
+    }
+    
+    public boolean isPasswordError() {
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.visibilityOfElementLocated(PSWD_ERROR_MESSAGE));
+        return driver.findElement(PSWD_ERROR_MESSAGE).isDisplayed();
     }
 
     public LoginPage fillRegistrationFormAndContinue(String name, String email, String password) {

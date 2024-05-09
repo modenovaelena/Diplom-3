@@ -27,6 +27,7 @@ public class RegisterTest {
             driver = new ChromeDriver(options);
         }
     }
+    
     @Test
     public void successfullRegistrationTest () throws Exception {
         RegistrationPage regPage= new RegistrationPage(driver);
@@ -39,6 +40,20 @@ public class RegisterTest {
             "12345q");
 
         Assert.assertTrue(logPage.isOpened());
+    }
+    
+    @Test
+    public void incorrectPasswordRegistrationTest () throws Exception {
+        RegistrationPage regPage= new RegistrationPage(driver);
+        regPage.open();
+        
+        Assert.assertTrue(regPage.isOpened());
+ 
+        regPage.fillRegistrationFormAndContinue("Anna",
+            "g" + System.currentTimeMillis() + "@gmail.com",
+            "1");
+
+        Assert.assertTrue(regPage.isPasswordError());
     }
     
     @After

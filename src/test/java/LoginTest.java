@@ -44,10 +44,70 @@ public class LoginTest {
     }
     
     @Test
-    @DisplayName("Positive registration scenario")
-    public void successfullRegistrationTest () {
-        LoginPage logPage = new LoginPage(driver);
-        logPage.open();
+    @DisplayName("Test login via 'Enter Account' button on home page")
+    public void loginViaEnterAccountButtonTest () {
+        
+        HomePage hPage = new HomePage(driver);
+        hPage.open();
+        
+        Assert.assertTrue(hPage.isOpened());
+        
+        LoginPage logPage = hPage.pressEnterAccountButton();
+        
+        Assert.assertTrue(logPage.isOpened());
+ 
+        hPage = logPage.fillLoginFormAndContinue(this.user.getEmail(), this.user.getPassword());
+
+        Assert.assertTrue(hPage.isOpened());
+    }
+    
+    @Test
+    @DisplayName("Test login via 'Personal Space' link on home page")
+    public void loginViaLkLinkTest () {
+        
+        HomePage hPage = new HomePage(driver);
+        hPage.open();
+        
+        Assert.assertTrue(hPage.isOpened());
+        
+        LoginPage logPage = hPage.clickLKLink();
+        
+        Assert.assertTrue(logPage.isOpened());
+ 
+        hPage = logPage.fillLoginFormAndContinue(this.user.getEmail(), this.user.getPassword());
+
+        Assert.assertTrue(hPage.isOpened());
+    }
+    
+    
+    @Test
+    @DisplayName("Test login via registration page")
+    public void loginViaRegistrationPageTest () {
+        
+        RegistrationPage regPage = new RegistrationPage(driver);
+        regPage.open();
+        
+        Assert.assertTrue(regPage.isOpened());
+        
+        LoginPage logPage = regPage.clickLoginLink();
+        
+        Assert.assertTrue(logPage.isOpened());
+ 
+        HomePage hPage = logPage.fillLoginFormAndContinue(this.user.getEmail(), this.user.getPassword());
+
+        Assert.assertTrue(hPage.isOpened());
+    }
+    
+    @Test
+    @DisplayName("Test login via password recovery")
+    public void loginViaPasswordRecoveryTest () {
+        
+        PasswordRecoveryPage prPag = new PasswordRecoveryPage(driver);
+        prPag.open();
+        
+        Assert.assertTrue(prPag.isOpened());
+        
+        LoginPage logPage = prPag.clickLoginLink();
         
         Assert.assertTrue(logPage.isOpened());
  

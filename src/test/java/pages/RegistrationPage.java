@@ -22,6 +22,8 @@ public class RegistrationPage {
     private static final By NAME_FIELD = By.xpath (".//label[text()='Имя']/../input");
     private static final By REGISTER_BUTTON = By.xpath (".//button[text() = 'Зарегистрироваться']");
     private static final By PSWD_ERROR_MESSAGE = By.xpath (".//p[text() = 'Некорректный пароль']");
+    private static final By LOGIN_LINK = By.xpath (".//a[text() = 'Войти']");
+    
    
     public RegistrationPage (WebDriver driver) {
         this.driver = driver;
@@ -62,5 +64,14 @@ public class RegistrationPage {
         
         return new LoginPage(driver);
     }
+    
+    @Step("Click 'Login' link")
+    public LoginPage clickLoginLink() {
+
+        driver.findElement(LOGIN_LINK).click();
+        
+        return new LoginPage(driver);
+    }
+    
 
 }

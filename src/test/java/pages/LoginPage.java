@@ -20,7 +20,7 @@ public class LoginPage {
     private static final By LOGIN_BUTTON = By.xpath (".//button[text() = 'Войти']");
     private static final By PASSPORD_FIELD = By.xpath (".//label[text()='Пароль']/../input") ;
     private static final By EMAIL_FIELD = By.xpath (".//label[text()='Email']/../input");
-
+    private static final By RESTORE_PASSWORD_LINK = By.xpath (".//a[text()='Восстановить пароль']");
    
     public LoginPage (WebDriver driver) {
         this.driver = driver;
@@ -52,5 +52,15 @@ public class LoginPage {
         
         return new HomePage(driver);
     }
+    
+    @Step("Click 'LK' link")
+    public LoginPage clickRestorePasswordLink() {
+
+        driver.findElement(RESTORE_PASSWORD_LINK).click();
+        
+        return new LoginPage(driver);
+    }
+    
+    
 
 }

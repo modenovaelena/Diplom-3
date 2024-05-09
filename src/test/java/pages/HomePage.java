@@ -18,7 +18,8 @@ public class HomePage {
     private  WebDriver driver;
     
     private static final By BURGER_CONSTRUCT_MESSAGE = By.xpath (".//h1[text()='Соберите бургер']");
-
+    private static final By ENTER_ACCOUNT_BUTTON = By.xpath (".//button[text() = 'Войти в аккаунт']");
+    private static final By LK_LINK = By.xpath (".//p[text() = 'Личный Кабинет']/..");
    
     public HomePage (WebDriver driver) {
         this.driver = driver;
@@ -35,4 +36,23 @@ public class HomePage {
                 .until(ExpectedConditions.visibilityOfElementLocated(BURGER_CONSTRUCT_MESSAGE));
         return driver.findElement(BURGER_CONSTRUCT_MESSAGE).isDisplayed();
     }
+    
+    @Step("Press 'Enter Account' button")
+    public LoginPage pressEnterAccountButton() {
+
+        driver.findElement(ENTER_ACCOUNT_BUTTON).click();
+        
+        return new LoginPage(driver);
+    }
+    
+    @Step("Click 'LK' link")
+    public LoginPage clickLKLink() {
+
+        driver.findElement(LK_LINK).click();
+        
+        return new LoginPage(driver);
+    }
+    
+    
+    
 }

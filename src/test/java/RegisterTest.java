@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
+import io.qameta.allure.junit4.DisplayName;
 
 public class RegisterTest {
 
@@ -29,7 +30,8 @@ public class RegisterTest {
     }
     
     @Test
-    public void successfullRegistrationTest () throws Exception {
+    @DisplayName("Positive registration scenario")
+    public void successfullRegistrationTest () {
         RegistrationPage regPage= new RegistrationPage(driver);
         regPage.open();
         
@@ -43,7 +45,8 @@ public class RegisterTest {
     }
     
     @Test
-    public void incorrectPasswordRegistrationTest () throws Exception {
+    @DisplayName("Attempt to register with invalid password")
+    public void incorrectPasswordRegistrationTest () {
         RegistrationPage regPage= new RegistrationPage(driver);
         regPage.open();
         

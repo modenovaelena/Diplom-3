@@ -9,76 +9,58 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.HomePage;
+import pages.*;
+import io.qameta.allure.junit4.DisplayName;
+import model.*;
+import services.*;
+
+import static io.restassured.RestAssured.given;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 
 public class LoginTest {
-    public static final boolean USE_FIREFOX = true;
+
+    public static final boolean USE_YANDEX = false;
     private  WebDriver driver;
+    
+    private User user = new User("Anna","g" + System.currentTimeMillis() +"@gmail.com",
+             "p12345");
+    private String accessToken;
+    private BurgerService service = new BurgerService();
+    
     @Before
-    public void setup() {
-        if (USE_FIREFOX) {
-            FirefoxOptions options = new FirefoxOptions();
-            //  options.addArguments("-headless");
-            driver = new FirefoxDriver(options);
+    public void setup() throws Exception {
+        if (USE_YANDEX) {
+           throw new Exception("Unsupported driver");
         } else {
             ChromeOptions options = new ChromeOptions();
-            //    options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-            options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
+            options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+            //options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
             driver = new ChromeDriver(options);
         }
+        
+        RestAssured.baseURI = BurgerService.BASE_URI;
+        this.accessToken = this.service.createUser(this.user);
     }
+    
     @Test
-    public void checkLoginTestOnMainPage () throws Exception {
-        // переход на страницу тестового приложения
+    @DisplayName("Positive registration scenario")
+    public void successfullRegistrationTest () {
+        LoginPage logPage = new LoginPage(driver);
+        logPage.open();
+        
+        Assert.assertTrue(logPage.isOpened());
+ 
+        HomePage hPage = logPage.fillLoginFormAndContinue(this.user.getEmail(), this.user.getPassword());
 
-        HomePage homePage= new HomePage(driver);
-        homePage.open();
-        Thread.sleep(2000);
-
-        homePage.clickButtonEntranceAccount();
-
-        Assert.assertTrue(driver.findElement(homePage.entranceSelectorXPath).isDisplayed());
-
-        homePage.fillEntranceTheFormAndContinue("ert123@mail.ru", "12345a");
-        Thread.sleep(1000);
-        homePage.clickButtonEntranceAfterForm();
-
-        // надо доделать с wait когда зайдет - не работает тест
+        Assert.assertTrue(hPage.isOpened());
+    }
+    
+    @After
+    public void teardown() {
+        
+        this.service.deleteUser(this.accessToken);
+        driver.quit();
     }
 
-    @Test
-    public void checkLoginTestThrowPrivateOffice () throws Exception {
-        // переход на страницу тестового приложения
-
-        HomePage homePage= new HomePage(driver);
-        homePage.open();
-        Thread.sleep(2000);
-
-        homePage.clickCabinetLink();
-
-        Assert.assertTrue(driver.findElement(homePage.buttonRegister).isDisplayed());
-
-        homePage.fillEntranceTheFormAndContinue("ert123@mail.ru", "12345a");
-        Thread.sleep(1000);
-        homePage.clickButtonEntranceAfterForm();
-
-        // надо доделать с wait когда зайдет - не работает тест
-    }
-
-    @Test
-    public void checkLoginTestThrowButtonRegistration () throws Exception {
-        // переход на страницу тестового приложения
-
-
-        // надо доделать с wait когда зайдет - не работает тест
-    }
-
-
-    @Test
-    public void checkLoginTestThrowRestoreButton () throws Exception {
-        // переход на страницу тестового приложения
-
-
-        // надо доделать с wait когда зайдет - не работает тест
-    }
 }

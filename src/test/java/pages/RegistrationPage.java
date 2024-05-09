@@ -10,12 +10,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import io.qameta.allure.Step;
+import services.*;
 
 public class RegistrationPage {
     
     private  WebDriver driver;
     
-    private static final By PASSPORD_FIELD = By.xpath (".//label[text()='Пароль']/../input") ;
+    private static final By PASSPORD_FIELD = By.xpath (".//label[text()='Пароль']/../input");
     private static final By EMAIL_FIELD = By.xpath (".//label[text()='Email']/../input");
     private static final By NAME_FIELD = By.xpath (".//label[text()='Имя']/../input");
     private static final By REGISTER_BUTTON = By.xpath (".//button[text() = 'Зарегистрироваться']");
@@ -25,22 +27,26 @@ public class RegistrationPage {
         this.driver = driver;
     }
 
+    @Step("Open registration page /register")
     public void open() {
-        driver.get("https://stellarburgers.nomoreparties.site/register");
+        driver.get(BurgerService.BASE_URI + "/register");
     }
     
+    @Step("Check if registration page /register is opened")
     public boolean isOpened() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOfElementLocated(REGISTER_BUTTON));
         return driver.findElement(REGISTER_BUTTON).isDisplayed();
     }
     
+    @Step("Check if we have password error on the page")
     public boolean isPasswordError() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOfElementLocated(PSWD_ERROR_MESSAGE));
         return driver.findElement(PSWD_ERROR_MESSAGE).isDisplayed();
     }
 
+    @Step("Fill registration form and press 'Register' button")
     public LoginPage fillRegistrationFormAndContinue(String name, String email, String password) {
 
         driver.findElement(NAME_FIELD).clear();

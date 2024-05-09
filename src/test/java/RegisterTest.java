@@ -11,22 +11,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
 import io.qameta.allure.junit4.DisplayName;
+import services.*;
 
 public class RegisterTest {
 
-    public static final boolean USE_YANDEX = false;
     private  WebDriver driver;
     
     @Before
-    public void setup() throws Exception {
-        if (USE_YANDEX) {
-           throw new Exception("Unsupported driver");
-        } else {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-            //options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-            driver = new ChromeDriver(options);
-        }
+    public void setup() {
+        driver = DriverFactory.getDriver();
     }
     
     @Test

@@ -20,7 +20,6 @@ import io.restassured.response.Response;
 
 public class LoginTest {
 
-    public static final boolean USE_YANDEX = false;
     private  WebDriver driver;
     
     private User user = new User("Anna","g" + System.currentTimeMillis() +"@gmail.com",
@@ -29,15 +28,8 @@ public class LoginTest {
     private BurgerService service = new BurgerService();
     
     @Before
-    public void setup() throws Exception {
-        if (USE_YANDEX) {
-           throw new Exception("Unsupported driver");
-        } else {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-            //options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-            driver = new ChromeDriver(options);
-        }
+    public void setup() {
+        driver = DriverFactory.getDriver();
         
         RestAssured.baseURI = BurgerService.BASE_URI;
         this.accessToken = this.service.createUser(this.user);

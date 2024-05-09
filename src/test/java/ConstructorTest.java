@@ -13,20 +13,16 @@ import pages.HomePage;
 public class ConstructorTest {
 
 
-    public static final boolean USE_FIREFOX = true;
+    public static final boolean USE_FIREFOX = false;
     private  WebDriver driver;
     @Before
     public void setup() {
-        if (USE_FIREFOX) {
-            FirefoxOptions options = new FirefoxOptions();
-            //  options.addArguments("-headless");
-            driver = new FirefoxDriver(options);
-        } else {
-            ChromeOptions options = new ChromeOptions();
-            //    options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-            options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-            driver = new ChromeDriver(options);
-        }
+        
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+        // options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
+        driver = new ChromeDriver(options);
+
     }
     @Test
     public void checkRegisterTest () throws Exception {
@@ -34,11 +30,6 @@ public class ConstructorTest {
 
         HomePage homePage= new HomePage(driver);
         homePage.open();
-        Thread.sleep(2000);
-
-        homePage.();
-
-
     }
 
 

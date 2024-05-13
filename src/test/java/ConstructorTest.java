@@ -24,8 +24,8 @@ public class ConstructorTest {
     }
     
     @Test
-    @DisplayName("Check if section switch is working")
-    public void sectionSwitchTest () {
+    @DisplayName("Check if we can switch to Souces")
+    public void sectionSwitchToSoucesTest () {
         HomePage page = new HomePage(driver);
         page.open();
         Assert.assertTrue(page.isOpened());
@@ -33,6 +33,28 @@ public class ConstructorTest {
         
         page.switchToSoucesSection();
         Assert.assertTrue(page.isSoucesSectionSelected());
+    }
+    
+    @Test
+    @DisplayName("Check if we can switch to Fillings")
+    public void sectionSwitchToFillingsTest () {
+        HomePage page = new HomePage(driver);
+        page.open();
+        Assert.assertTrue(page.isOpened());
+        Assert.assertTrue(page.isBunsSectionSelected());
+        
+        page.switchToFillingsSection();
+        Assert.assertTrue(page.isFillingsSectionSelected());
+    }
+    
+    
+    @Test
+    @DisplayName("Check if we can switch to Fillings and back to Bulky")
+    public void sectionSwitchToBulkyTest () {
+        HomePage page = new HomePage(driver);
+        page.open();
+        Assert.assertTrue(page.isOpened());
+        Assert.assertTrue(page.isBunsSectionSelected());
         
         page.switchToFillingsSection();
         Assert.assertTrue(page.isFillingsSectionSelected());

@@ -12,7 +12,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.qameta.allure.Step;
 import services.*;
-import java.lang.Boolean;
+import java.lang.*;
+import java.time.Duration;
 
 public class HomePage implements Page {
     
@@ -23,11 +24,13 @@ public class HomePage implements Page {
     private static final By LK_LINK = By.xpath (".//p[text() = 'Личный Кабинет']/..");
     
     private static final By SOUCE_LINK = By.xpath (".//span[text() = 'Соусы']");
-    private static final By SOUCE_TITLE = By.xpath (".//h2[text() = 'Соусы']");
+    private static final By SOUCE_DIV = By.xpath (".//span[text() = 'Соусы']/..");
     private static final By FILLING_LINK = By.xpath (".//span[text() = 'Начинки']");
-    private static final By FILLING_TITLE = By.xpath (".//h2[text() = 'Начинки']");
+    private static final By FILLING_DIV = By.xpath (".//span[text() = 'Начинки']/..");
     private static final By BUN_LINK = By.xpath (".//span[text() = 'Булки']");
-    private static final By BUN_TITLE = By.xpath (".//h2[text() = 'Булки']");
+    private static final By BUN_DIV = By.xpath (".//span[text() = 'Булки']/..");
+    private static final String SECTION_CURRENT_CLASS = "tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect";
+    private static final String SECTION_NOT_SELECTED_CLASS = "tab_tab__1SPyG  pt-4 pr-10 pb-4 pl-10 noselect";
 
     private boolean auth = false;
    
@@ -50,7 +53,7 @@ public class HomePage implements Page {
     
     @Step("Check if home page / is opened")
     public boolean isOpened() {
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(BURGER_CONSTRUCT_MESSAGE));
         return driver.findElement(BURGER_CONSTRUCT_MESSAGE).isDisplayed();
     }
@@ -76,44 +79,54 @@ public class HomePage implements Page {
     
     @Step("Click 'Souces' link")
     public HomePage switchToSoucesSection() {
-
-        driver.findElement(SOUCE_LINK).click();
+               
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+               .until(ExpectedConditions.attributeContains(SOUCE_DIV, "class", SECTION_NOT_SELECTED_CLASS));
+            
+        driver.findElement(SOUCE_DIV).click();   
         return this;
     }
     
     @Step("Check if 'Souces' section is selected")
     public boolean isSoucesSectionSelected() {
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.visibilityOfElementLocated(SOUCE_TITLE));
-        return driver.findElement(SOUCE_TITLE).isDisplayed();
+        
+      WebDriverWait wait =  new WebDriverWait(driver, Duration.ofSeconds(10));
+      return wait.until(ExpectedConditions.attributeContains(SOUCE_DIV, "class", SECTION_CURRENT_CLASS));
     }
     
     @Step("Click 'Buns' link")
     public HomePage switchToBunsSection() {
 
-        driver.findElement(BUN_LINK).click();
+       // WebElement el = driver.findElement(BUN_DIV);
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+               .until(ExpectedConditions.attributeContains(BUN_DIV, "class", SECTION_NOT_SELECTED_CLASS));
+
+        driver.findElement(BUN_DIV).click();
         return this;
     }
     
     @Step("Check if 'Buns' section is selected")
     public boolean isBunsSectionSelected() {
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.visibilityOfElementLocated(BUN_TITLE));
-        return driver.findElement(BUN_TITLE).isDisplayed();
+        
+        WebDriverWait wait =  new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.attributeContains(BUN_DIV, "class", SECTION_CURRENT_CLASS));
     }
     
     @Step("Click 'Fillings' link")
     public HomePage switchToFillingsSection() {
 
-        driver.findElement(FILLING_LINK).click();
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.attributeContains(FILLING_DIV, "class", SECTION_NOT_SELECTED_CLASS));
+
+        driver.findElement(FILLING_DIV).click();
         return this;
     }
     
     @Step("Check if 'Fillings' section is selected")
     public boolean isFillingsSectionSelected() {
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.visibilityOfElementLocated(FILLING_TITLE));
-        return driver.findElement(FILLING_TITLE).isDisplayed();
+    
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.attributeContains(FILLING_DIV, "class", SECTION_CURRENT_CLASS));
     }
     
 }

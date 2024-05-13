@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverFactory {
     
-    public static final String USE_BROWSER = "firefox";
+    public static final String USE_BROWSER = "chrome";
     
     public static WebDriver getDriver() {
         

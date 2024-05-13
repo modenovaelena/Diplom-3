@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
 import io.qameta.allure.junit4.DisplayName;
 import services.*;
+import org.assertj.core.api.SoftAssertions;
 
 public class ConstructorTest {
 
@@ -24,22 +25,20 @@ public class ConstructorTest {
     
     @Test
     @DisplayName("Check if section switch is working")
-    public void sectionSwitchTest () throws Exception {
+    public void sectionSwitchTest () {
         HomePage page = new HomePage(driver);
         page.open();
         Assert.assertTrue(page.isOpened());
-        
-        page.switchToSoucesSection();
-        Thread.sleep(2000);
-        Assert.assertTrue(page.isSoucesSectionSelected());
-        
-        page.switchToBunsSection();
-          Thread.sleep(2000);
         Assert.assertTrue(page.isBunsSectionSelected());
         
-        page.isFillingsSectionSelected();
-          Thread.sleep(2000);
+        page.switchToSoucesSection();
         Assert.assertTrue(page.isSoucesSectionSelected());
+        
+        page.switchToFillingsSection();
+        Assert.assertTrue(page.isFillingsSectionSelected());
+        
+        page.switchToBunsSection();
+        Assert.assertTrue(page.isBunsSectionSelected());
     }
     
     

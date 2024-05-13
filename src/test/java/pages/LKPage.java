@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.qameta.allure.Step;
 import services.*;
+import java.time.Duration;
 
 public class LKPage implements Page {
     
@@ -32,7 +33,7 @@ public class LKPage implements Page {
     
     @Step("Check if account profile page /account/profile is opened")
     public boolean isOpened() {
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(PROFILE_LINK));
         return driver.findElement(PROFILE_LINK).isDisplayed();
     }

@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.qameta.allure.Step;
 import services.*;
+import java.time.Duration;
 
 public class RegistrationPage implements Page {
     
@@ -36,14 +37,14 @@ public class RegistrationPage implements Page {
     
     @Step("Check if registration page /register is opened")
     public boolean isOpened() {
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(REGISTER_BUTTON));
         return driver.findElement(REGISTER_BUTTON).isDisplayed();
     }
     
     @Step("Check if we have password error on the page")
     public boolean isPasswordError() {
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(PSWD_ERROR_MESSAGE));
         return driver.findElement(PSWD_ERROR_MESSAGE).isDisplayed();
     }

@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.qameta.allure.Step;
 import services.*;
+import java.time.Duration;
 
 public class PasswordRecoveryPage implements Page {
     
@@ -32,7 +33,7 @@ public class PasswordRecoveryPage implements Page {
     
     @Step("Check if password recovery page /forgot-password is opened")
     public boolean isOpened() {
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(PASSWORD_RECOVERY_MESSAGE));
         return driver.findElement(PASSWORD_RECOVERY_MESSAGE).isDisplayed();
     }

@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.qameta.allure.Step;
 import services.*;
+import java.time.Duration;
 
 public class LoginPage implements Page {
     
@@ -33,7 +34,7 @@ public class LoginPage implements Page {
     
     @Step("Check if login page /login is opened")
     public boolean isOpened() {
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
         return driver.findElement(LOGIN_BUTTON).isDisplayed();
     }
